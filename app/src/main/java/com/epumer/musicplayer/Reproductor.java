@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 /**
@@ -66,19 +67,22 @@ public class Reproductor extends Fragment {
         View v = inflater.inflate(R.layout.fragment_reproductor, container, false);
 
         TextView tituloView = v.findViewById(R.id.titulo);
-        ImageView portadaView = v.findViewById(R.id.portada);
-        Button playButton = v.findViewById(R.id.play);
+        final ImageView portadaView = v.findViewById(R.id.portada);
+        final Button playButton = v.findViewById(R.id.play);
+        playButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.reproducirCancion(urlCancion);
+                playButton.animate().scaleX(0).scaleY(0).alpha(0).setDuration(1000).start();
+                float scaleBy = 1/3f;
+                portadaView.animate().scaleXBy(scaleBy).scaleYBy(scaleBy).setDuration(1000).start();
+            }
+        });
 
         tituloView.setText(titulo);
         mListener.ponerPortada(urlPortada, portadaView);
 
         return v;
-    }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-        }
     }
 
     @Override
@@ -88,7 +92,7 @@ public class Reproductor extends Fragment {
             mListener = (ReproductorListener) context;
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement ListaCancionesListener");
+                    + " must implement ReproductorListener");
         }
     }
 
@@ -111,6 +115,6 @@ public class Reproductor extends Fragment {
     public interface ReproductorListener {
         // TODO: Update argument type and name
         void ponerPortada(String urlPortada, ImageView imagen);
-
+        void reproducirCancion(String urlCancion);
     }
 }
