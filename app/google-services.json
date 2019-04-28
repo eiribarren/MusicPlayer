@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "171688774004",
+    "firebase_url": "https://canciones-3d44a.firebaseio.com",
+    "project_id": "canciones-3d44a",
+    "storage_bucket": "canciones-3d44a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:171688774004:android:01791fed17ab369f",
+        "android_client_info": {
+          "package_name": "com.epumer.musicplayer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "171688774004-nb07ugfc5g9md2r5jg9u5aurvdbgsnmt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.epumer.musicplayer",
+            "certificate_hash": "a6e0303f3b82f746f22f54d52f3b7ae07e5c7068"
+          }
+        },
+        {
+          "client_id": "171688774004-r1ok6kvs3ot1e68nlhs385p2htp4ffib.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJ1NaAP704OMv5bE6ZbKjBbfB7l8Wku24"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "171688774004-r1ok6kvs3ot1e68nlhs385p2htp4ffib.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
