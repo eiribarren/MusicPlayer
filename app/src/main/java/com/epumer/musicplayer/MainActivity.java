@@ -35,8 +35,8 @@ public class MainActivity extends AppCompatActivity
 
     StorageReference storageRef;
     MediaPlayer mediaPlayer;
-    boolean cancionCargada;
     HashMap<String, String> cachedFiles;
+    ChildEventListener addCancionesListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,23 +45,21 @@ public class MainActivity extends AppCompatActivity
         mediaPlayer = new MediaPlayer();
         cachedFiles = new HashMap<>();
         storageRef = FirebaseStorage.getInstance().getReference();
+        addFirebaseListener();
         mostrarListaCanciones();
     }
 
-    public void mostrarListaCanciones() {
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.fragmentContainer, ListaCanciones.newInstance(), "ListaCanciones")
-                .commit();
-
-        FirebaseDatabase.getInstance().getReference().child("listaCanciones").addChildEventListener(new ChildEventListener() {
+    private void addFirebaseListener() {
+        addCancionesListener = new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 Cancion cancion = dataSnapshot.getValue(Cancion.class);
+                cancion.setKey(dataSnapshot.getKey());
 
                 ListaCanciones listaCanciones = (ListaCanciones)getSupportFragmentManager().findFragmentByTag("ListaCanciones");
-
-                listaCanciones.addCancion(cancion);
+                if (listaCanciones != null) {
+                    listaCanciones.addCancion(cancion);
+                }
             }
 
             @Override
@@ -71,7 +69,13 @@ public class MainActivity extends AppCompatActivity
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+                Cancion cancion = dataSnapshot.getValue(Cancion.class);
+                cancion.setKey(dataSnapshot.getKey());
 
+                ListaCanciones listaCanciones = (ListaCanciones)getSupportFragmentManager().findFragmentByTag("ListaCanciones");
+                if (listaCanciones != null) {
+                    listaCanciones.removeCancion(cancion);
+                }
             }
 
             @Override
@@ -83,7 +87,18 @@ public class MainActivity extends AppCompatActivity
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-        });
+        };
+    }
+
+    public void mostrarListaCanciones() {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragmentContainer, ListaCanciones.newInstance(), "ListaCanciones")
+                .commit();
+
+        FirebaseDatabase fd = FirebaseDatabase.getInstance();
+        fd.getReference().child("listaCanciones").removeEventListener(addCancionesListener);
+        fd.getReference().child("listaCanciones").addChildEventListener(addCancionesListener);
     }
 
     @Override

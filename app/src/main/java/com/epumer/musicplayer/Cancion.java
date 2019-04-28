@@ -2,7 +2,7 @@ package com.epumer.musicplayer;
 
 public class Cancion {
 
-    String urlPortada, urlCancion, titulo;
+    String urlPortada, urlCancion, titulo, key;
 
     public Cancion() {}
 
@@ -35,4 +35,8 @@ public class Cancion {
     public void setTitulo(String titulo) {
         this.titulo = titulo;
     }
+
+    public String getKey() { return key; }
+
+    public void setKey(String key) { this.key = key; }
 }

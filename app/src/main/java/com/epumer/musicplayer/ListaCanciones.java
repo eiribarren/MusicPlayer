@@ -109,6 +109,15 @@ public class ListaCanciones extends Fragment {
         adapter.notifyDataSetChanged();
     }
 
+    public void removeCancion(Cancion cancion) {
+        for (Cancion c : canciones) {
+            if (c.getKey().equals(cancion.getKey())) {
+                canciones.remove(c);
+            }
+        }
+        adapter.notifyDataSetChanged();
+    }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
